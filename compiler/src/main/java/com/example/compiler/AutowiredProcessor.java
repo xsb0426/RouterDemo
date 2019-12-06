@@ -31,7 +31,7 @@ import javax.lang.model.util.Types;
 /**
  * @author xushibin
  * @date 2019-11-19
- * description：
+ * description：注解处理器 扫描Autowired注解
  */
 @AutoService(Processor.class)
 public class AutowiredProcessor extends AbstractProcessor {

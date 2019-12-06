@@ -19,16 +19,22 @@ import dalvik.system.DexFile;
 /**
  * @author xushibin
  * @date 2019-09-23
- * description：
+ * description：单例
  */
 public class Router {
 
+    /**
+     * 需要扫描的包名，编译时注解生成的类在这个包下面
+     */
     private static final String GENERATE_PACKAGE = "com.example.genarate";
 
     private static final Router instance = new Router();
 
-    private Application applicationContext;
+    private Application application;
 
+    /**
+     * routerMap就是一个缓存，把path和class对应缓存下来
+     */
     private Map<String, Class> routerMap;
 
     public Map<String, Class> getRouterMap() {
@@ -54,7 +60,7 @@ public class Router {
      * @param application
      */
     public void init(Application application) {
-        this.applicationContext = application;
+        this.application = application;
         //查找指定包名下的所有类名
         List<String> classNameList = getClassName(GENERATE_PACKAGE);
         for (String s : classNameList) {
@@ -78,7 +84,7 @@ public class Router {
     private List<String> getClassName(String packageName) {
         List<String> list = new ArrayList<>();
         try {
-            String sourceDir = applicationContext.getPackageManager().getApplicationInfo(applicationContext.getPackageName(), 0).sourceDir;
+            String sourceDir = application.getPackageManager().getApplicationInfo(application.getPackageName(), 0).sourceDir;
             DexFile dexFile = new DexFile(sourceDir);
             Enumeration<String> entries = dexFile.entries();
             while (entries.hasMoreElements()) {
@@ -113,12 +119,12 @@ public class Router {
                     }
                     return instance;
                 } else if (instance instanceof Activity) {  //跳转activity
-                    Intent intent = new Intent(applicationContext, aClass);
+                    Intent intent = new Intent(application, aClass);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     if (bundle != null && bundle.size() > 0) {
                         intent.putExtras(bundle);
                     }
-                    applicationContext.startActivity(intent);
+                    application.startActivity(intent);
                 } else if (instance instanceof IProvider) { //获取接口
                     return instance;
                 }
@@ -132,7 +138,6 @@ public class Router {
     public PostCard build(String path) {
         return new PostCard(path);
     }
-
 
     /**
      * 注入方法，如果要使用Autowired注解，必须在程序开始进行注入

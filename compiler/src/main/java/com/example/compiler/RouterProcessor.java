@@ -28,7 +28,7 @@ import javax.lang.model.element.TypeElement;
 /**
  * @author xushibin
  * @date 2019-10-28
- * description：
+ * description：注解处理器 扫描Route注解
  */
 @AutoService(Processor.class)
 public class RouterProcessor extends AbstractProcessor {
