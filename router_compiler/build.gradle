@@ -4,9 +4,11 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':annotation')
 
+    //用于自动为注解处理器生成META-INF信息
     implementation 'com.google.auto.service:auto-service:1.0-rc6'
     annotationProcessor 'com.google.auto.service:auto-service:1.0-rc6'
 
+    //快速生成代码
     implementation 'com.squareup:javapoet:1.8.0'
 }
 

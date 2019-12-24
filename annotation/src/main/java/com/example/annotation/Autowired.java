@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  * @date 2019-11-19
  * description：
  */
-@Retention(RetentionPolicy.CLASS)
+@Retention(RetentionPolicy.CLASS) //表示注解保留到class文件，运行时会被丢弃
 @Target(ElementType.FIELD)
 public @interface Autowired {
     String value() default "";
